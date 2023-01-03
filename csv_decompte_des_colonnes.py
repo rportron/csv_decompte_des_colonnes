@@ -32,7 +32,8 @@ ligne_en_cours = 1
 try:
     with open(fichier, newline='') as f:
         reader = csv.reader(f, delimiter=delimiter)
-        for row in reader:
+        try:
+            for row in reader:
             if premiere_ligne:
                 nbre_colonne = len(row)
                 premiere_ligne = False
@@ -44,6 +45,9 @@ try:
                 if not number_only:
                     print(" -- un nombre de colonne différent ({}) a été détecté à la ligne {}".format(nbre_colonne, ligne_en_cours))
             ligne_en_cours += 1
+        except UnicodeDecodeError:
+            print(f"\nErreur: Le fichier {fichier} n'est pas encodé en utf8")
+            exit()
 except FileNotFoundError:
     print("\nError: File {} not found\n".format(fichier))
     exit()
