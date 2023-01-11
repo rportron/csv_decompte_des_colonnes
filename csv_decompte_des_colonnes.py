@@ -31,7 +31,7 @@ probleme_de_nombre_de_colonnes = False
 ligne_en_cours = 1
 try:
     with open(fichier, newline='') as f:
-        reader = csv.reader(f, delimiter=delimiter)
+        reader = csv.reader(f, delimiter=delimiter, quoting=csv.QUOTE_NONE)
         try:
             for row in reader:
                 if premiere_ligne:
