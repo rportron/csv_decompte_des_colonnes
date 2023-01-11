@@ -12,6 +12,7 @@ import argparse #gestion des arguments
 parser = argparse.ArgumentParser(description="Compte le nombre de colonnes d'un fichier csv, il affiche le nombre de colonnes et avertit si certaines lignes n'ont pas le même nombre de colonnes.")
 parser.add_argument('fichier', help='le fichier dont on doit dénombrer les colonnes')
 parser.add_argument('-sep', nargs='?', help="le séparateur du fichier csv, par défaut il s'agit du ;")
+parser.add_argument('-idq', action='store_true', help="ignore les guillemets dans le fichier, permet de résoudre certaines erreurs liées à la présence d'un seul guillemet dans les champs")
 parser.add_argument('-n', action='store_true', help="renvoie uniquement le nombre de colonnes, renvoie ERROR si ce nombre n'est pas constant")
 args = parser.parse_args()
 
@@ -26,12 +27,20 @@ if args.n:
 else:
     number_only = False
 
+if args.idq:
+    ignore_doublequote = True
+else:
+    ignore_doublequote = False
+
 premiere_ligne = True
 probleme_de_nombre_de_colonnes = False
 ligne_en_cours = 1
 try:
     with open(fichier, newline='') as f:
-        reader = csv.reader(f, delimiter=delimiter, quoting=csv.QUOTE_NONE)
+        if ignore_doublequote:
+            reader = csv.reader(f, delimiter=delimiter, quoting=csv.QUOTE_NONE)
+        else:
+            reader = csv.reader(f, delimiter=delimiter)
         try:
             for row in reader:
                 if premiere_ligne:
