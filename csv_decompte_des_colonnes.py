@@ -4,7 +4,7 @@ Ce programme compte le nombre de colonnes de tout un fichier csv
     * donne le nombre de colonne
     * avertit si une ligne a un nmobre différent de colonnes
 Création du programme le 5 novembre 2019
-Dernière modification le 15 janvier 2020
+Dernière modification le 11 janvier 2023
 """
 import csv
 import argparse #gestion des arguments
@@ -34,22 +34,25 @@ try:
         reader = csv.reader(f, delimiter=delimiter)
         try:
             for row in reader:
-            if premiere_ligne:
-                nbre_colonne = len(row)
-                premiere_ligne = False
-                if not number_only:
-                    print("Nombre de colonne du début du fichier = ", nbre_colonne)
-            if len(row) != nbre_colonne:
-                probleme_de_nombre_de_colonnes = True
-                nbre_colonne = len(row)
-                if not number_only:
-                    print(" -- un nombre de colonne différent ({}) a été détecté à la ligne {}".format(nbre_colonne, ligne_en_cours))
-            ligne_en_cours += 1
+                if premiere_ligne:
+                    nbre_colonne = len(row)
+                    premiere_ligne = False
+                    if not number_only:
+                        print("Nombre de colonne du début du fichier = ", nbre_colonne)
+                if len(row) != nbre_colonne:
+                    probleme_de_nombre_de_colonnes = True
+                    nbre_colonne = len(row)
+                    if not number_only:
+                        print(" -- un nombre de colonne différent ({}) a été détecté à la ligne {}".format(nbre_colonne, ligne_en_cours))
+                ligne_en_cours += 1
         except UnicodeDecodeError:
             print(f"\nErreur: Le fichier {fichier} n'est pas encodé en utf8")
             exit()
+        except Exception as error :
+            print(f"\nErreur: L'erreur suivante s'est produite : ({error}), sur la ligne {ligne_en_cours}")
+            exit()
 except FileNotFoundError:
-    print("\nError: File {} not found\n".format(fichier))
+    print(f"\nErreur: Le fichier {fichier} n'a pas été trouvé\n")
     exit()
 if number_only:
     if probleme_de_nombre_de_colonnes:
@@ -58,6 +61,6 @@ if number_only:
         print(nbre_colonne)
 else:
     if probleme_de_nombre_de_colonnes:
-        print("\nLe fichier {} n'a pas un nombre constant de colonnes :(".format(fichier))
+        print(f"\nLe fichier {fichier} n'a pas un nombre constant de colonnes")
     else:
-        print("\nLe fichier {} a un nombre constant de colonnes :)".format(fichier))
+        print(f"\nLe fichier {fichier} a un nombre constant de colonnes :)")
