@@ -23,3 +23,8 @@ python3 csv_decompte_des_colonnes.py -sep ',' mon_fichier.csv
 python3 csv_decompte_des_colonnes.py -n mon_fichier.csv
 ```
 Si le nombre de colonnes n'est pas constant, ERROR sera renvoyé
+### Pour ignorer la présence de guillemet dans le fichier
+```
+python3 csv_decompte_des_colonnes.py -idq mon_fichier.csv
+```
+Attention en cas de présence du séparateur à l'intérieur de champs entourés de guillemet
