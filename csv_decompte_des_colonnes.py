@@ -61,6 +61,6 @@ if number_only:
         print(nbre_colonne)
 else:
     if probleme_de_nombre_de_colonnes:
-        print(f"\nLe fichier {fichier} n'a pas un nombre constant de colonnes")
+        print(f"\nLe fichier {fichier} n'a pas un nombre constant de colonnes sur ses {ligne_en_cours - 1} lignes")
     else:
-        print(f"\nLe fichier {fichier} a un nombre constant de colonnes :)")
+        print(f"\nLe fichier {fichier} a un nombre constant de colonnes sur ses {ligne_en_cours - 1} lignes :)")
