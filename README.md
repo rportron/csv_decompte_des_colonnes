@@ -28,3 +28,7 @@ Si le nombre de colonnes n'est pas constant, ERROR sera renvoyé
 python3 csv_decompte_des_colonnes.py -idq mon_fichier.csv
 ```
 Attention en cas de présence du séparateur à l'intérieur de champs entourés de guillemet
+### Cas de très gros fichier (+ de 100 000 lignes)
+```
+python3 csv_decompte_des_colonnes.py -bf mon_gros_fichier.csv
+```
