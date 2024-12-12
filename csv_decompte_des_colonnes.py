@@ -13,6 +13,7 @@ parser = argparse.ArgumentParser(description="Compte le nombre de colonnes d'un 
 parser.add_argument('fichier', help='le fichier dont on doit dénombrer les colonnes')
 parser.add_argument('-sep', nargs='?', help="le séparateur du fichier csv, par défaut il s'agit du ;")
 parser.add_argument('-idq', action='store_true', help="ignore les guillemets dans le fichier, permet de résoudre certaines erreurs liées à la présence d'un seul guillemet dans les champs")
+parser.add_argument('-bf', action='store_true', help="indique que le fichier est un gros fichier (+ de 100 000 lignes)")
 parser.add_argument('-n', action='store_true', help="renvoie uniquement le nombre de colonnes, renvoie ERROR si ce nombre n'est pas constant")
 args = parser.parse_args()
 
@@ -31,6 +32,9 @@ if args.idq:
     ignore_doublequote = True
 else:
     ignore_doublequote = False
+
+if args.bf:  # J'augmente la limite à 2 000 000 de lignes
+    csv.field_size_limit(2000000)
 
 premiere_ligne = True
 probleme_de_nombre_de_colonnes = False
